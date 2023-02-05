@@ -1,7 +1,31 @@
+.logo-container {
+  display: flex;
+  font-size: 20px;
+
+  .logo {
+    background: url(./sun.svg);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    font-size: 26px;
+    padding-right: 10px;
+
+  }
+
+  .logo-name {
+    margin: 0;
+  }
+}
+
+
+
 .search-page {
 
+  background: #ebebeb;
+  min-height: 100vh;
+
   header {
-    padding: 20px;
+    padding: 20px 20px 20px 30px;
     background: rgb(0, 169, 145);
     color: white;
   }
@@ -20,7 +44,7 @@
       font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
         sans-serif;
-
+      background: white;
       label {
         font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
           'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

@@ -124,6 +124,7 @@ function App() {
           <form>
             <div className="search-inputs">
               <Autocomplete
+                sx={{ background: "white" }}
                 id="autocompleteFrom"
                 className="autocomplete is-from"
                 inputValue={inputFromValue}
@@ -145,6 +146,7 @@ function App() {
 
               />
               <Autocomplete
+                sx={{ background: "white" }}
                 id="autocompleteTo"
                 className="autocomplete is-to"
                 inputValue={inputToValue}
@@ -167,6 +169,7 @@ function App() {
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  sx={{ background: "white" }}
                   label="Date from"
                   className="autocomplete"
                   value={dateValue}
