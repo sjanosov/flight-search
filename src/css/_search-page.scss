@@ -1,0 +1,64 @@
+.search-page {
+
+  header {
+    padding: 20px;
+    background: rgb(0, 169, 145);
+    color: white;
+  }
+
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+
+  .search-form {
+    padding-top: 50px;
+
+    .autocomplete {
+      display: flex;
+      width: 250px;
+      font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+
+      label {
+        font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+      }
+
+      .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+        color: rgb(0, 169, 145);
+      }
+
+      .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: rgb(0, 169, 145);
+      }
+
+      .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: rgb(0, 169, 145);
+      }
+
+      
+    }
+    
+    .search-inputs {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
+//Datepicker focus styles
+.css-195y93z-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: rgb(0, 169, 145) !important;
+}
+
+.css-10fao8b-MuiPickersCalendarHeader-labelContainer {
+  font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif !important;
+}
+
+
+

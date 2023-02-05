@@ -1,0 +1,142 @@
+//flights
+
+.flight-list {
+    padding-top: 40px;
+}
+
+.flight-container {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    padding: 10px;
+    margin: 10px auto 30px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .f-from {
+        margin-bottom: 10px;
+    }
+
+    .f-to {
+        margin-bottom: 5px;
+    }
+
+    .f-info {
+        margin-bottom: 10px;
+    }
+
+    .f-duration {
+        border: 1px solid rgb(126, 209, 235);
+        background: #cef3ff;
+        border-radius: 24px;
+        padding: 3px 5px;
+        margin: 0 12px 0 23px;
+        font-size: 12px;
+        color: #1f1f6c;
+    }
+
+    .fa-arrow-down {
+        font-size: 22px;
+    }
+
+    .f-change {
+        border: 1px solid #cfcbcb;
+        background: #d4dcdf;
+        border-radius: 24px;
+        padding: 3px 5px;
+        font-size: 12px;
+        color: black;
+    }
+
+
+
+    .flight-book {
+        padding: 0 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+
+        .f-price {
+            font-weight: bold;
+            font-size: 20px;
+        }
+    }
+
+}
+
+.flight-skeleton-list {
+    margin-top: 40px;
+    padding-left: 0;
+    list-style: none;
+}
+
+
+.flight-skeleton {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    padding: 10px;
+    margin: 10px auto 30px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+
+    .right-side {
+        padding: 0 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fs {
+        height: 25px;
+        margin-bottom: 10px;
+        animation: skeleton-loading 1s linear infinite alternate;
+
+        &.w-75 {
+            width: 75px;
+        }
+
+        &.w-100 {
+            width: 100px;
+        }
+
+        &.w-160 {
+            width: 136px;
+        }
+       
+    }
+}
+
+
+@keyframes skeleton-loading {
+    0% {
+      background-color: hsl(200, 20%, 80%);
+    }
+    100% {
+      background-color: hsl(200, 20%, 95%);
+    }
+  }
+
+// //Spinner
+// @keyframes spinner {
+//     0% {
+//         transform: rotate(0deg);
+//     }
+
+//     100% {
+//         transform: rotate(360deg);
+//     }
+// }
+
+// .loading-spinner {
+//     width: 50px;
+//     height: 50px;
+//     border: 10px solid #f3f3f3;
+//     /* Light grey */
+//     border-top: 10px solid #383636;
+//     /* Black */
+//     border-radius: 50%;
+//     animation: spinner 1.5s linear infinite;
+// }
