@@ -2,7 +2,7 @@ import Header from './components/Header';
 import { Autocomplete, TextField, Box, Button, Collapse } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Axios from 'axios';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { FLIGHTS_API_URL, LOCATIONS_API_URL, dateFormater } from './api/constants/constants';
@@ -14,8 +14,8 @@ import { FlightSkeleton } from './components/FlightSkeleton';
 function App() {
   const [locationsFromData, setLocationsFromData] = useState([]);
   const [locationsToData, setLocationsToData] = useState([]);
-  const [selectedFromValue, setSelectedFromValue] = useState({});
-  const [selectedToValue, setSelectedToValue] = useState('');
+  const [selectedFromValue, setSelectedFromValue] = useState(null);
+  const [selectedToValue, setSelectedToValue] = useState(null);
   const [inputFromValue, setInputFromValue] = useState('');
   const [inputToValue, setInputToValue] = useState('');
   const [dateValue, setDateValue] = useState(undefined);
@@ -23,9 +23,12 @@ function App() {
   const formattedDateValue = dateFormater.format(dateValue)
   const [isFetching, setIsfetching] = useState(false);
   const [flightInfoOpen, setFlightInfoOpen] = useState([]); //<Number[]>
+  const [openDropdownInputFrom, setOpenDropdownInputFrom] = useState(false);
+  const [openDropdownInputTo, setOpenDropdownInputTo] = useState(false);
 
 
   useEffect(() => {
+    // console.log("useffect called")
     //locations fetch
     const fetchedFromData = () => Axios.get(`${LOCATIONS_API_URL}/${inputFromValue}&location_types=airport`)
       .then(res => {
@@ -40,7 +43,10 @@ function App() {
 
 
     //flights fetch
-    if (dateValue != undefined && selectedFromValue != '' & selectedToValue != '') {
+    // console.log(dateValue)
+    // console.log(selectedFromValue)
+    // console.log(selectedToValue)
+    if (dateValue != undefined && selectedFromValue?.data != null && selectedToValue?.data != null) {
       setIsfetching(true);
 
       const fetchedFlightsData = () => Axios.get(`${FLIGHTS_API_URL}${selectedFromValue?.data?.code}&fly_to=${selectedToValue?.data?.code}&depart_after=${formattedDateValue}`)
@@ -55,24 +61,27 @@ function App() {
         })
       fetchedFlightsData();
     }
+    else {
+      setFlightsData({});
+    }
+
 
 
     fetchedFromData();
     fetchedToData();
 
 
-  }, [inputFromValue, inputToValue, formattedDateValue])
+  }, [inputFromValue, inputToValue, formattedDateValue, selectedFromValue, selectedToValue])
 
 
   const handleflightInfoOpen = (clickIndex) => {
+    let openFlightInfoCopy;
     if (flightInfoOpen.includes(clickIndex)) {
-      const openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickIndex });
-      setFlightInfoOpen(openFlightInfoCopy);
+      openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickIndex });
     } else {
-      const openFlightInfoCopy = [...flightInfoOpen];
-      openFlightInfoCopy.push(clickIndex);
-      setFlightInfoOpen(openFlightInfoCopy);
+      openFlightInfoCopy = [...flightInfoOpen, clickIndex];
     }
+    setFlightInfoOpen(openFlightInfoCopy);
   }
 
   const printFlights = () => {
@@ -116,6 +125,19 @@ function App() {
     });
   }
 
+
+  const handleInputFromOpen = (inputValue) => {
+    if (inputValue.length > 0 && selectedFromValue?.data == null) {
+      setOpenDropdownInputFrom(true);
+    } else setOpenDropdownInputFrom(false);
+  }
+
+  const handleInputToOpen = (inputValue) => {
+    if (inputValue.length > 0 && selectedToValue?.data == null) {
+      setOpenDropdownInputTo(true);
+    } else setOpenDropdownInputTo(false);
+  }
+
   return (
     <div className="search-page">
       <Header />
@@ -130,12 +152,16 @@ function App() {
                 inputValue={inputFromValue}
                 onInputChange={(event, newInputValue) => {
                   setInputFromValue(newInputValue);
+                  handleInputFromOpen(newInputValue)
                 }}
                 getOptionLabel={(locationsFromData) => `${locationsFromData.code} ${locationsFromData.city.name}`}
                 options={locationsFromData}
-                onChange={(event, value) => setSelectedFromValue({ data: value })}
+                onChange={(event, value) => { setSelectedFromValue({ data: value }); setOpenDropdownInputFrom(false); }}
                 isOptionEqualToValue={(option, value) => option.code === value.code}
-                noOptionsText={"No availabe location"}
+                noOptionsText={"No such place"}
+                open={openDropdownInputFrom}
+
+
                 renderOption={(props, locationsFromData) => (
                   <Box component="p" {...props} key={locationsFromData.id}>
                     {locationsFromData.code} - {locationsFromData.city.name}
@@ -152,12 +178,14 @@ function App() {
                 inputValue={inputToValue}
                 onInputChange={(event, newInputValue) => {
                   setInputToValue(newInputValue);
+                  handleInputToOpen(newInputValue);
                 }}
+                open={openDropdownInputTo}
                 getOptionLabel={(locationsToData) => `${locationsToData.code} ${locationsToData.city.name}`}
                 options={locationsToData}
-                onChange={(event, value) => setSelectedToValue({ data: value })}
+                onChange={(event, value) => { setSelectedToValue({ data: value }); setOpenDropdownInputTo(false) }}
                 isOptionEqualToValue={(option, value) => option.code === value.code}
-                noOptionsText={"No availabe location"}
+                noOptionsText={"No such place"}
                 renderOption={(props, locationsToData) => (
                   <Box component="p" {...props} key={locationsToData.id}>
                     {locationsToData.code} - {locationsToData.city.name}
@@ -183,7 +211,7 @@ function App() {
           </form>
         </div>
         <div className="search-results">
-          {isFetching ?
+          {(isFetching && selectedFromValue != null && selectedToValue != null) ?
             <ul className="flight-skeleton-list">
               <FlightSkeleton />
               <FlightSkeleton />
