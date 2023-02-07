@@ -37,10 +37,9 @@ export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, 
                                         <FontAwesomeIcon icon={faArrowDown} />
                                         <span className="f-duration">{flight.fly_duration}</span>
                                         <span className="f-change">{flight.route.length} stops</span>
-                                         <button className={classNames("f-more-details")} onClick={() => handleflightInfoOpen(index)}>
-                                            More details...
+                                         <button className={classNames("f-more-details", {"open": flightInfoOpen.includes(index)})} onClick={() => handleflightInfoOpen(index)}>
+                                            More details
                                             <span className="f-md-icon" aria-hidden={true}/>
-                                            
                                             
                                             </button>
                                         {/* {flight?.route?.map((route) => {
