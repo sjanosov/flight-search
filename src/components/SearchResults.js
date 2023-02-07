@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FlightSkeleton } from './FlightSkeleton';
 import { Button, Collapse } from '@mui/material'
-
+import classNames from 'classnames';
 
 export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, isFetching }) => {
 
@@ -37,14 +37,18 @@ export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, 
                                         <FontAwesomeIcon icon={faArrowDown} />
                                         <span className="f-duration">{flight.fly_duration}</span>
                                         <span className="f-change">{flight.route.length} stops</span>
-                                        <button onClick={() => handleflightInfoOpen(index)}>More details...</button>
+                                         <button className={classNames("f-more-details")} onClick={() => handleflightInfoOpen(index)}>
+                                            More details...
+                                            <span className="f-md-icon" aria-hidden={true}/>
+                                            
+                                            
+                                            </button>
                                         {/* {flight?.route?.map((route) => {
-                
-                return (
-                  <span className="f-change">{route.flyFrom} stops</span>
-                )
-              })} */}
 
+                                            return (
+                                                <span className="f-change">{route.flyFrom} stops</span>
+                                            )
+                                        })}  */}
                                     </div>
                                     <Collapse in={flightInfoOpen.includes(index)}>
                                         flight info flight info flight info flight info flight info

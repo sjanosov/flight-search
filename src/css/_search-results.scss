@@ -48,6 +48,40 @@
         color: black;
     }
 
+    .f-more-details {
+        background: none;
+        border: 0;
+        color: inherit;
+        cursor: pointer; 
+        font: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0 0 0 20px;
+        text-decoration: underline;
+        position: relative;
+
+        .f-md-icon:before {
+            position: absolute;
+            right: -20px;
+            top: -2px;
+            content: '>';
+            transform: rotate(90deg);
+            transition: transform 1s;
+            font-size: 20px;
+        }
+        &.open {
+            .f-md-icon:before {
+                transform: rotate(180deg);
+            } 
+
+        }
+        &:hover {
+            text-decoration: none;
+        }
+
+
+    }
+
 
 
     .flight-book {
@@ -83,7 +117,7 @@
     justify-content: space-between;
     background: white;
 
-    
+
 
     .right-side {
         padding: 0 40px;
@@ -109,16 +143,17 @@
         &.w-160 {
             width: 136px;
         }
-       
+
     }
 }
 
 
 @keyframes skeleton-loading {
     0% {
-      background-color: hsl(200, 20%, 80%);
+        background-color: hsl(200, 20%, 80%);
     }
+
     100% {
-      background-color: hsl(200, 20%, 95%);
+        background-color: hsl(200, 20%, 95%);
     }
-  }
+}
