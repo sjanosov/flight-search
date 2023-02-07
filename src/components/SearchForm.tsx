@@ -3,6 +3,27 @@ import { Autocomplete, TextField, Box, Button, Collapse } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocationDataType, LocationType } from '../types/types';
+
+export interface ISearchFormProps {
+  inputFromValue: string;
+  setInputFromValue: (val: string) => void;
+  selectedFromValue: LocationType | null;
+  setSelectedFromValue: (val: LocationType) => void;
+  setOpenDropdownInputFrom: (val: boolean) => void;
+  openDropdownInputFrom: boolean;
+  locationsFromData: LocationDataType[];
+  inputToValue: string;
+  setInputToValue: (val: string) => void;
+  setSelectedToValue: (val: LocationType) => void;
+  selectedToValue: LocationType | null;
+  setOpenDropdownInputTo: (val: boolean) => void;
+  openDropdownInputTo: boolean;
+  locationsToData: LocationDataType[];
+  dateValue: Date | undefined,
+  setDateValue: (val: Date | undefined) => void;
+}
+
 
 export const SearchForm = ({
   inputFromValue,
@@ -21,15 +42,15 @@ export const SearchForm = ({
   locationsToData,
   dateValue,
   setDateValue
-}) => {
+}: ISearchFormProps) => {
 
-  const handleInputFromOpen = (inputValue) => {
+  const handleInputFromOpen = (inputValue: string) => {
     if (inputValue.length > 0 && selectedFromValue?.data == null) {
       setOpenDropdownInputFrom(true);
     } else setOpenDropdownInputFrom(false);
   }
 
-  const handleInputToOpen = (inputValue) => {
+  const handleInputToOpen = (inputValue: string) => {
     if (inputValue.length > 0 && selectedToValue?.data == null) {
       setOpenDropdownInputTo(true);
     } else setOpenDropdownInputTo(false);
@@ -96,14 +117,13 @@ export const SearchForm = ({
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-              sx={{ background: "white" }}
               label="Date from"
               className="autocomplete"
               value={dateValue}
               onChange={(newValue) => {
-                setDateValue(newValue);
+                setDateValue(newValue == null ? undefined : newValue);
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField sx={{ background: "white" }} {...params} />}
             />
           </LocalizationProvider>
         </div>

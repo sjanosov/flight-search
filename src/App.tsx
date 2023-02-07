@@ -4,23 +4,26 @@ import Axios from 'axios';
 import { FLIGHTS_API_URL, LOCATIONS_API_URL, dateFormater } from './api/constants/constants';
 import { SearchForm } from './components/SearchForm';
 import { SearchResults } from './components/SearchResults';
+import React from 'react';
+import { FlightsType, LocationType} from './types/types';
 
 
 function App() {
   const [locationsFromData, setLocationsFromData] = useState([]);
   const [locationsToData, setLocationsToData] = useState([]);
-  const [selectedFromValue, setSelectedFromValue] = useState(null);
-  const [selectedToValue, setSelectedToValue] = useState(null);
+  const [selectedFromValue, setSelectedFromValue] = useState<LocationType | null>(null);
+  const [selectedToValue, setSelectedToValue] = useState<LocationType | null>(null);
   const [inputFromValue, setInputFromValue] = useState('');
   const [inputToValue, setInputToValue] = useState('');
-  const [dateValue, setDateValue] = useState(undefined);
-  const [flightsData, setFlightsData] = useState({});
+  const [dateValue, setDateValue] = useState<Date | undefined>(undefined);
+  const [flightsData, setFlightsData] = useState<FlightsType | null>(null);
   const formattedDateValue = dateFormater.format(dateValue)
   const [isFetching, setIsfetching] = useState(false);
-  const [flightInfoOpen, setFlightInfoOpen] = useState([]); //<Number[]>
+  const [flightInfoOpen, setFlightInfoOpen] = useState<number[]>([]); //<Number[]>
   const [openDropdownInputFrom, setOpenDropdownInputFrom] = useState(false);
   const [openDropdownInputTo, setOpenDropdownInputTo] = useState(false);
 
+ 
 
   useEffect(() => {
     //locations fetch
@@ -53,7 +56,7 @@ function App() {
       fetchedFlightsData();
     }
     else {
-      setFlightsData({});
+      setFlightsData(null);
     }
 
     fetchedFromData();

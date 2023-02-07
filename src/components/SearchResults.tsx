@@ -3,10 +3,19 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { FlightSkeleton } from './FlightSkeleton';
 import { Button, Collapse } from '@mui/material'
 import classNames from 'classnames';
+import React from 'react';
+import { FlightsType } from '../types/types';
 
-export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, isFetching }) => {
+export interface ISearchResultsProps {
+    flightInfoOpen: number[], 
+    setFlightInfoOpen: (index: number[]) => void, 
+    flightsData: FlightsType | null, 
+    isFetching: boolean;
+}
 
-    const handleflightInfoOpen = (clickIndex) => {
+export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, isFetching }: ISearchResultsProps) => {
+
+    const handleflightInfoOpen = (clickIndex: number) => {
         let openFlightInfoCopy;
         if (flightInfoOpen.includes(clickIndex)) {
             openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickIndex });
