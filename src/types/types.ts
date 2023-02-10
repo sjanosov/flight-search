@@ -8,6 +8,8 @@ export type FlightsDataType = {
     flyFrom: string;
     flyTo: string;
     price: number;
+    has_airport_change: boolean;
+    
 }
 
 export type RouteType = {
@@ -15,6 +17,9 @@ export type RouteType = {
     flyTo: string;
     cityFrom: string;
     cityTo: string;
+    aTimeUTC: number;
+    dTimeUTC: number;
+    airline: string;
 }
 
 export type LocationType = {

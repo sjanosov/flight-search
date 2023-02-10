@@ -1,17 +1,31 @@
 //flights
 
 .flight-list {
-    padding-top: 40px;
+    padding-top: 50px;
+    
 }
 
 .flight-container {
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-    padding: 10px;
+    padding: 18px 10px 18px 33px;
     margin: 10px auto 30px auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     background: white;
+    transform: translateX(100px);
+    opacity: 0;
+    transition: 150ms;
+    &.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    
+
+    .flight-details {
+        flex: 1;
+    }
 
     .f-from {
         margin-bottom: 10px;
@@ -52,7 +66,7 @@
         background: none;
         border: 0;
         color: inherit;
-        cursor: pointer; 
+        cursor: pointer;
         font: inherit;
         line-height: normal;
         overflow: visible;
@@ -69,17 +83,70 @@
             transition: transform 1s;
             font-size: 20px;
         }
+
         &.open {
             .f-md-icon:before {
                 transform: rotate(-90deg);
-            } 
+            }
 
         }
+
         &:hover {
             text-decoration: none;
         }
+    }
+
+    // .f-md-content {
+    //     display: flex;
+    //     flex-direction: column;
+    //     align-items: flex-start;
+    //     padding: 14px;
+    //     margin: 15px 15px 15px 37px;
+    //     background: #a9ebe2;
+    //     border-radius: 4px;
+
+    //     .f-md-from, .f-md-to {
+    //         font-size: 14px;
+    //         color: grey
+    //     }
+
+    //     .f-from {
+    //         margin-bottom: 2px;
+    //     }
+
+    //     .f-to {
+    //         margin-bottom: 13px;
+    //     }
+
+    //     .f-md-city {
+    //         padding-right: 15px;
+    //     }
+    // }
+
+    .f-md-table {
+        width: 92%;
+        background: #d0f3ee;
+        padding: 20px;
+        margin: 10px 4px 10px 43px;
+        border-radius: 5px;
 
 
+        .f-place {
+            margin-bottom: 0;
+        }
+
+        .f-date {
+            color: gray;
+            font-size: 14px;
+        }
+
+        .f-icon {
+            width: 18%;
+        }
+
+        td, th {
+            padding: 5px;
+        }
     }
 
 
@@ -101,7 +168,7 @@
 }
 
 .flight-skeleton-list {
-    margin-top: 40px;
+    margin-top: 50px;
     padding-left: 0;
     list-style: none;
 

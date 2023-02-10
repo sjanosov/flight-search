@@ -62,11 +62,13 @@ function App() {
     fetchedFromData();
     fetchedToData();
 
+   
+
 
   }, [inputFromValue, inputToValue, formattedDateValue, selectedFromValue, selectedToValue])
 
 
-
+  
   return (
     <div className="search-page">
       <Header />

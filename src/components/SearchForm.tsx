@@ -56,8 +56,8 @@ export const SearchForm = ({
     } else setOpenDropdownInputTo(false);
   }
   return (
-    <div className="search-form">
-      <form>
+    
+      <form className="search-form">
         <div className="search-inputs">
           <Autocomplete
             sx={{ background: "white" }}
@@ -128,6 +128,5 @@ export const SearchForm = ({
           </LocalizationProvider>
         </div>
       </form>
-    </div>
   )
 }
