@@ -1,16 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faPlane } from '@fortawesome/free-solid-svg-icons'
 
 import { FlightSkeleton } from './FlightSkeleton';
-import { Button, Collapse } from '@mui/material'
-import classNames from 'classnames';
 import React, { useEffect } from 'react';
 import { FlightsType } from '../types/types';
-import moment from 'moment';
-import { LowestPriceFlightList } from './LowestPriceFlightList';
-import { ShortestTimeFlightList } from './ShortestTimeFlightList';
-import { OtherFlightsList } from './OtherFlightsList';
+import { FlightsList } from './FlightsList';
 
 export interface ISearchResultsProps {
     flightInfoOpen: string[],
@@ -66,9 +58,9 @@ export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, 
                 :
                 flightsData != null ?
                     <>
-                        <LowestPriceFlightList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} lowestPriceFlightList={lowestPriceFlightList} />
-                        <ShortestTimeFlightList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} shortestTimeFlightList={shortestTimeFlightList} />
-                        <OtherFlightsList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} otherFlightsList={otherFlightsList} />
+                        <FlightsList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} flightsList={lowestPriceFlightList} title="Lowest prices" />
+                        <FlightsList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} flightsList={shortestTimeFlightList} title="Shortest flights" />
+                        <FlightsList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} flightsList={otherFlightsList} title="Other flights" />
                     </> : null
             }
         </div>

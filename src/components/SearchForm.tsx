@@ -1,5 +1,5 @@
 import React from 'react'
-import { Autocomplete, TextField, Box, Button, Collapse } from '@mui/material'
+import { Autocomplete, TextField, Box } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -56,77 +56,78 @@ export const SearchForm = ({
     } else setOpenDropdownInputTo(false);
   }
   return (
-    
-      <form className="search-form">
-        <div className="search-inputs">
-          <Autocomplete
-            sx={{ background: "white" }}
-            id="autocompleteFrom"
-            className="autocomplete is-from"
-            inputValue={inputFromValue}
-            onInputChange={(event, newInputValue) => {
-              setInputFromValue(newInputValue);
-              handleInputFromOpen(newInputValue)
+
+    <form className="search-form">
+      <div className="search-inputs">
+        <Autocomplete
+          sx={{ background: "white" }}
+          id="autocompleteFrom"
+          className="autocomplete is-from"
+          inputValue={inputFromValue}
+          onInputChange={(event, newInputValue) => {
+            setInputFromValue(newInputValue);
+            handleInputFromOpen(newInputValue)
+          }}
+          getOptionLabel={(locationsFromData) => `${locationsFromData.code} ${locationsFromData.city.name}`}
+          options={locationsFromData}
+          onChange={(event, value) => {
+            setSelectedFromValue({ data: value });
+            setOpenDropdownInputFrom(false);
+          }}
+          isOptionEqualToValue={(option, value) => option.code === value.code}
+          noOptionsText={"No such place"}
+          open={openDropdownInputFrom}
+
+
+          renderOption={(props, locationsFromData) => (
+            <Box component="li" {...props} key={locationsFromData.id}>
+              {locationsFromData.code} - {locationsFromData.city.name}
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params}
+            label="From" />}
+
+        />
+        <Autocomplete
+          sx={{ background: "white" }}
+          id="autocompleteTo"
+          className="autocomplete is-to"
+          inputValue={inputToValue}
+          onInputChange={(event, newInputValue) => {
+            setInputToValue(newInputValue);
+            handleInputToOpen(newInputValue);
+          }}
+          open={openDropdownInputTo}
+          getOptionLabel={(locationsToData) => `${locationsToData.code} ${locationsToData.city.name}`}
+          options={locationsToData}
+          onChange={(event, value) => {
+            setSelectedToValue({ data: value });
+            setOpenDropdownInputTo(false)
+          }}
+          isOptionEqualToValue={(option, value) => option.code === value.code}
+          noOptionsText={"No such place"}
+          renderOption={(props, locationsToData) => (
+            <Box component="li" {...props} key={locationsToData.id}>
+              {locationsToData.code} - {locationsToData.city.name}
+            </Box>
+          )}
+          renderInput={(params) => <TextField {...params}
+            label="To" />}
+
+        />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            disablePast
+            label="Date from"
+            className="autocomplete"
+            value={dateValue}
+            onChange={(newValue) => {
+              setDateValue(newValue == null ? undefined : newValue);
             }}
-            getOptionLabel={(locationsFromData) => `${locationsFromData.code} ${locationsFromData.city.name}`}
-            options={locationsFromData}
-            onChange={(event, value) => {
-              setSelectedFromValue({ data: value });
-              setOpenDropdownInputFrom(false);
-            }}
-            isOptionEqualToValue={(option, value) => option.code === value.code}
-            noOptionsText={"No such place"}
-            open={openDropdownInputFrom}
-
-
-            renderOption={(props, locationsFromData) => (
-              <Box component="li" {...props} key={locationsFromData.id}>
-                {locationsFromData.code} - {locationsFromData.city.name}
-              </Box>
-            )}
-            renderInput={(params) => <TextField {...params}
-              label="From" />}
-
+            renderInput={(params) => <TextField sx={{ background: "white" }} {...params} />}
           />
-          <Autocomplete
-            sx={{ background: "white" }}
-            id="autocompleteTo"
-            className="autocomplete is-to"
-            inputValue={inputToValue}
-            onInputChange={(event, newInputValue) => {
-              setInputToValue(newInputValue);
-              handleInputToOpen(newInputValue);
-            }}
-            open={openDropdownInputTo}
-            getOptionLabel={(locationsToData) => `${locationsToData.code} ${locationsToData.city.name}`}
-            options={locationsToData}
-            onChange={(event, value) => {
-              setSelectedToValue({ data: value });
-              setOpenDropdownInputTo(false)
-            }}
-            isOptionEqualToValue={(option, value) => option.code === value.code}
-            noOptionsText={"No such place"}
-            renderOption={(props, locationsToData) => (
-              <Box component="li" {...props} key={locationsToData.id}>
-                {locationsToData.code} - {locationsToData.city.name}
-              </Box>
-            )}
-            renderInput={(params) => <TextField {...params}
-              label="To" />}
-
-          />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Date from"
-              className="autocomplete"
-              value={dateValue}
-              onChange={(newValue) => {
-                setDateValue(newValue == null ? undefined : newValue);
-              }}
-              renderInput={(params) => <TextField sx={{ background: "white" }} {...params} />}
-            />
-          </LocalizationProvider>
-        </div>
-      </form>
+        </LocalizationProvider>
+      </div>
+    </form>
   )
 }

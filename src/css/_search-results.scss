@@ -66,6 +66,16 @@
         color: black;
     }
 
+    .f-airport-change {
+        border: 1px solid #cfcbcb;
+        background: #daa8e3;
+        border-radius: 24px;
+        padding: 3px 5px;
+        font-size: 12px;
+        color: black;
+        margin-left: 12px;
+    }
+
     .f-more-details {
         background: none;
         border: 0;
@@ -99,33 +109,6 @@
             text-decoration: none;
         }
     }
-
-    // .f-md-content {
-    //     display: flex;
-    //     flex-direction: column;
-    //     align-items: flex-start;
-    //     padding: 14px;
-    //     margin: 15px 15px 15px 37px;
-    //     background: #a9ebe2;
-    //     border-radius: 4px;
-
-    //     .f-md-from, .f-md-to {
-    //         font-size: 14px;
-    //         color: grey
-    //     }
-
-    //     .f-from {
-    //         margin-bottom: 2px;
-    //     }
-
-    //     .f-to {
-    //         margin-bottom: 13px;
-    //     }
-
-    //     .f-md-city {
-    //         padding-right: 15px;
-    //     }
-    // }
 
     .f-md-table {
         width: 92%;

@@ -3,23 +3,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Collapse } from '@mui/material';
 import classNames from 'classnames';
 import React from 'react'
-import { FlightsDataType, FlightsType } from '../types/types';
+import { FlightsDataType } from '../types/types';
 
-export interface IShortestTimeFlightListProps {
+export interface IFlightListProps {
     flightInfoOpen: string[];
     setFlightInfoOpen: (id: string[]) => void;
-    shortestTimeFlightList: FlightsDataType[] | undefined;
+    flightsList: FlightsDataType[] | undefined;
+    title: string;
 }
 
-export const ShortestTimeFlightList = ({ flightInfoOpen, setFlightInfoOpen, shortestTimeFlightList, }: IShortestTimeFlightListProps) => {
+export const FlightsList = ({ flightInfoOpen, setFlightInfoOpen, flightsList, title }: IFlightListProps) => {
 
-
-    const handleflightInfoOpen = (clickId: string) => {
+    const handleflightInfoOpen = (clickID: string) => {
         let openFlightInfoCopy;
-        if (flightInfoOpen.includes(clickId)) {
-            openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickId });
+        if (flightInfoOpen.includes(clickID)) {
+            openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickID });
         } else {
-            openFlightInfoCopy = [...flightInfoOpen, clickId];
+            openFlightInfoCopy = [...flightInfoOpen, clickID];
         }
         setFlightInfoOpen(openFlightInfoCopy);
     }
@@ -32,10 +32,10 @@ export const ShortestTimeFlightList = ({ flightInfoOpen, setFlightInfoOpen, shor
     }
     return (
         <>
-            <h2 className="f-title">Shortest flights</h2>
+            <h2 className="f-title">{title}</h2>
 
             <ul className="flight-list">
-                {shortestTimeFlightList?.map((flight, index) => {
+                {flightsList?.map((flight, index) => {
                     return (
                         <li key={index} className="flight-container">
                             <div className="flight-details">
@@ -48,7 +48,7 @@ export const ShortestTimeFlightList = ({ flightInfoOpen, setFlightInfoOpen, shor
                                     <FontAwesomeIcon icon={faArrowDown} />
                                     <span className="f-duration">{flight.fly_duration}</span>
                                     <span className="f-change">{flight.route.length - 1 == 1 ? flight.route.length - 1 + " stop" : flight.route.length - 1 + " stops"}</span>
-                                    {flight.has_airport_change ? <span className="f-duration">Airport change</span> : null}
+                                    {flight.has_airport_change ? <span className="f-airport-change">Airport change</span> : null}
                                     <button className={classNames("f-more-details", { "open": flightInfoOpen.includes(flight.id) })} onClick={() => handleflightInfoOpen(flight.id)}>
                                         More details
                                         <span className="f-md-icon" aria-hidden={true} />
