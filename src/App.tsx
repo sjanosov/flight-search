@@ -19,7 +19,7 @@ function App() {
   const [flightsData, setFlightsData] = useState<FlightsType | null>(null);
   const formattedDateValue = dateFormater.format(dateValue)
   const [isFetching, setIsfetching] = useState(false);
-  const [flightInfoOpen, setFlightInfoOpen] = useState<number[]>([]); //<Number[]>
+  const [flightInfoOpen, setFlightInfoOpen] = useState<string[]>([]); //<Number[]>
   const [openDropdownInputFrom, setOpenDropdownInputFrom] = useState(false);
   const [openDropdownInputTo, setOpenDropdownInputTo] = useState(false);
 
@@ -61,9 +61,6 @@ function App() {
 
     fetchedFromData();
     fetchedToData();
-
-   
-
 
   }, [inputFromValue, inputToValue, formattedDateValue, selectedFromValue, selectedToValue])
 

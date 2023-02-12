@@ -8,45 +8,32 @@ import classNames from 'classnames';
 import React, { useEffect } from 'react';
 import { FlightsType } from '../types/types';
 import moment from 'moment';
+import { LowestPriceFlightList } from './LowestPriceFlightList';
+import { ShortestTimeFlightList } from './ShortestTimeFlightList';
+import { OtherFlightsList } from './OtherFlightsList';
 
 export interface ISearchResultsProps {
-    flightInfoOpen: number[],
-    setFlightInfoOpen: (index: number[]) => void,
+    flightInfoOpen: string[],
+    setFlightInfoOpen: (id: string[]) => void,
     flightsData: FlightsType | null,
     isFetching: boolean;
 }
 
 export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, isFetching }: ISearchResultsProps) => {
 
+    //Pick first three flights (lowest prices)
+    const lowestPriceFlightList = flightsData?.data?.filter((flight, index) => index < 3)
 
-    const handleflightInfoOpen = (clickIndex: number) => {
-        let openFlightInfoCopy;
-        if (flightInfoOpen.includes(clickIndex)) {
-            openFlightInfoCopy = flightInfoOpen.filter((element) => { return element !== clickIndex });
-        } else {
-            openFlightInfoCopy = [...flightInfoOpen, clickIndex];
-        }
-        setFlightInfoOpen(openFlightInfoCopy);
-    }
+    //shortest time
+    flightsData?.data?.sort((a, b) => a.duration.total - b.duration.total)
+    const shortestTimeFlightList = flightsData?.data?.filter((flight, index) => index < 3)
 
-    const getRoutFlyTime = (time: number) => {
-        let eDate = new Date(0);
-        eDate.setUTCSeconds(time);
-        let eDateString = eDate.toLocaleDateString() + " " + eDate.toLocaleTimeString();
-        return eDateString;
-    }
+    //other flights 
+    flightsData?.data?.sort((a, b) => a.price - b.price)
+    const otherFlightsList = flightsData?.data?.filter((flight) => !lowestPriceFlightList?.includes(flight) && !shortestTimeFlightList?.includes(flight))
 
 
 
-    let sortingMap = new Map();
-
-    const lowestPrice = flightsData?.data?.map(flight => {
-        console.log(flight)
-        if (!sortingMap.has(flight.price)) sortingMap.set(flight.price, []);
-        sortingMap.get(flight.price).push(flight);
-
-        // console.log(sortingMap.forEach(f => f.push(flight.price)))
-    })
     useEffect((() => {
         const flightLists = document.querySelectorAll(".flight-container");
 
@@ -77,78 +64,12 @@ export const SearchResults = ({ flightInfoOpen, setFlightInfoOpen, flightsData, 
                     <FlightSkeleton />
                 </ul>
                 :
-                <ul className="flight-list">
-                    {flightsData?.data?.map((flight, index) => {
-                        return (
-                            <li key={index} className="flight-container">
-                                <div className="flight-details">
-                                    <p className="f-from">
-                                        <span className="text-size-12">From: </span>
-                                        {flight.flyFrom}
-                                    </p>
-                                    <div className="f-info">
-                                        <FontAwesomeIcon icon={faArrowDown} />
-                                        <span className="f-duration">{flight.fly_duration}</span>
-                                        <span className="f-change">{flight.route.length - 1 == 1 ? flight.route.length - 1 + " stop" : flight.route.length - 1 + " stops"}</span>
-                                        {flight.has_airport_change ? <span className="f-duration">Has airport change</span> : null}
-                                        <button className={classNames("f-more-details", { "open": flightInfoOpen.includes(index) })} onClick={() => handleflightInfoOpen(index)}>
-                                            More details
-                                            <span className="f-md-icon" aria-hidden={true} />
-                                        </button>
-                                    </div>
-                                    <Collapse in={flightInfoOpen.includes(index)}>
-                                        <table className="f-md-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Airline</th>
-                                                    <th className="from">From</th>
-                                                    <th></th>
-                                                    <th className="to">To</th>
-
-                                                </tr>
-                                            </thead>
-                                            {flight?.route?.map((route, index) => {
-                                                return (
-                                                    <tbody key={index}>
-                                                        <tr>
-                                                            <td className="airline">
-                                                                <p>{route.airline}</p>
-                                                            </td>
-                                                            <td className="from">
-                                                                <p className="f-place">{route.flyFrom} {route.cityFrom}</p>
-                                                                <p className="f-date">{getRoutFlyTime(route.dTimeUTC)}</p>
-                                                            </td>
-                                                            <td className="f-icon">
-                                                                <FontAwesomeIcon icon={faPlane} />
-                                                            </td>
-                                                            <td className="to">
-                                                                <p className="f-to">{route.flyTo} {route.cityTo}</p>
-                                                                <p className="f-date">{getRoutFlyTime(route.aTimeUTC)}</p>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-
-                                                )
-                                            })}
-                                        </table>
-                                    </Collapse>
-                                    <p className="f-to"><span className="text-size-12">To: </span>{flight.flyTo}</p>
-                                </div>
-                                <div className="flight-book">
-                                    <p className="f-price">{flight.price} eur</p>
-                                    <Button
-                                        variant="contained"
-                                        className="f-book" sx={{
-                                            backgroundColor: "#00ad98",
-                                            boxShadow: "none",
-                                            '&: hover': {
-                                                backgroundColor: "#098777"
-                                            }
-                                        }} >Book</Button>
-                                </div>
-                            </li>)
-                    })}
-                </ul>
+                flightsData != null ?
+                    <>
+                        <LowestPriceFlightList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} lowestPriceFlightList={lowestPriceFlightList} />
+                        <ShortestTimeFlightList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} shortestTimeFlightList={shortestTimeFlightList} />
+                        <OtherFlightsList flightInfoOpen={flightInfoOpen} setFlightInfoOpen={setFlightInfoOpen} otherFlightsList={otherFlightsList} />
+                    </> : null
             }
         </div>
     )

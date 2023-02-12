@@ -3,13 +3,19 @@ export type FlightsType = {
 }
 
 export type FlightsDataType = {
+    id: string;
     fly_duration: string;
+    duration: FlightDuration;
     route: RouteType[];
     flyFrom: string;
     flyTo: string;
     price: number;
     has_airport_change: boolean;
     
+}
+
+export type FlightDuration = {
+    total: number;
 }
 
 export type RouteType = {
